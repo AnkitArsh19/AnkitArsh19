@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=400"/>
+  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=300"/>
 </p>
 
 I’m a backend-focused engineer who enjoys understanding how complex systems work beneath the surface. I care about why systems behave the way they do, how design decisions scale over time, and where abstractions start to leak.
@@ -35,4 +35,5 @@ Direction
 This profile reflects how I think and work at the moment, not a finished state. Over time, I want this page to clearly show growth: deeper understanding, better architectural decisions, and systems that are built with intention rather than habit.
 
 Medium Blogs
-[![Omid Nikrah Medium](https://github-readme-medium.vercel.app/?username=omidnikrah)](https://medium.com/@ankitarsh19)
+
+[![Omid Nikrah Medium](https://github-readme-medium.vercel.app/?username=ankitarsh19&limit=2&bg=222f2e&text=ff0000)](https://medium.com/@ankitarsh19)
