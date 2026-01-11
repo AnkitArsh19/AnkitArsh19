@@ -35,7 +35,7 @@ Direction
 This profile reflects how I think and work at the moment, not a finished state. Over time, I want this page to clearly show growth: deeper understanding, better architectural decisions, and systems that are built with intention rather than habit.
 
 Medium Blogs
+I occasionally write about backend systems and architecture to clarify my own thinking. A couple of recent pieces are linked below.
+ <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"><img src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0" alt="Recent Article 0" width="500" height="200"> 
 
- <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"><img src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0" alt="Recent Article 0"> 
-
-<a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@imantumorang/2"><img src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/1" alt="Recent Article 1"> 
+<a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@imantumorang/2"><img src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/1" alt="Recent Article 1" width="500" height="200"> 
