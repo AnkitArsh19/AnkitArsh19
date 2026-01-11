@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0"/>
+  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=400"/>
 </p>
 
 I’m a backend-focused engineer who enjoys understanding how complex systems work beneath the surface. I care about why systems behave the way they do, how design decisions scale over time, and where abstractions start to leak.
