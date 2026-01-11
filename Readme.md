@@ -151,8 +151,8 @@ A couple of recent pieces are linked below.
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"
       alt="Recent Medium Article 0"
-      width="450"
-      height="280"
+      width="420"
+      height="300"
       style="border-radius: 8px;"
     />
   </a>
@@ -161,8 +161,8 @@ A couple of recent pieces are linked below.
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/1"
       alt="Recent Medium Article 1"
-      width="450"
-      height="280"
+      width="420"
+      height="300"
       style="border-radius: 8px;"
     />
   </a>
