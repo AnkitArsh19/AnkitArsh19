@@ -110,6 +110,17 @@ Writing imperfect code once has taught me more than reading perfect explanations
 <hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
 
 <!-- ========================= -->
+<!--     TECHNICAL FOCUS       -->
+<!-- ========================= -->
+
+<h3>Technical Focus</h3>
+
+<p style="max-width: 750px;">
+<b>Core:</b> Java, Spring Boot, REST APIs, relational databases, backend system design<br/>
+</p>
+
+
+<!-- ========================= -->
 <!--        DIRECTION          -->
 <!-- ========================= -->
 
@@ -140,8 +151,8 @@ A couple of recent pieces are linked below.
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"
       alt="Recent Medium Article 0"
-      width="380"
-      height="230"
+      width="450"
+      height="280"
       style="border-radius: 8px;"
     />
   </a>
@@ -150,8 +161,8 @@ A couple of recent pieces are linked below.
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/1"
       alt="Recent Medium Article 1"
-      width="380"
-      height="230"
+      width="450"
+      height="280"
       style="border-radius: 8px;"
     />
   </a>
