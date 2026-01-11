@@ -36,4 +36,6 @@ This profile reflects how I think and work at the moment, not a finished state. 
 
 Medium Blogs
 
-[![Omid Nikrah Medium](https://github-readme-medium.vercel.app/?username=ankitarsh19&limit=2&bg=222f2e&text=ff0000)](https://medium.com/@ankitarsh19)
+ <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"><img src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0" alt="Recent Article 0"> 
+
+<a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@imantumorang/2"><img src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/1" alt="Recent Article 1"> 
