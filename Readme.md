@@ -7,6 +7,7 @@ I’m a backend-focused engineer who enjoys understanding how complex systems wo
 Most of my work revolves around Java and backend development. I’m comfortable with frontend, but backend aligns more naturally with how I think: APIs, data flow, state management, performance trade-offs, and architectures that don’t collapse as requirements evolve. I’m still learning, but I’m serious and methodical about it, and I prefer depth over speed.
 
 Projects
+
 YapLab
 
 YapLab is a backend-driven messaging application built with Spring Boot. It was designed to be simple in scope, but realistic in behavior. The system supports core messaging features such as text messages, file sharing, emojis, audio messages, group chats, read receipts, typing indicators, and message state handling.
@@ -32,3 +33,6 @@ AI plays a big role in my learning process as a second brain I can question deep
 Direction
 
 This profile reflects how I think and work at the moment, not a finished state. Over time, I want this page to clearly show growth: deeper understanding, better architectural decisions, and systems that are built with intention rather than habit.
+
+Medium Blogs
+[![Omid Nikrah Medium](https://github-readme-medium.vercel.app/?username=omidnikrah)](https://medium.com/@ankitarsh19)
