@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&textColor=%23FFFFFF&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=200"/>
+  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=300"/>
 </p>
 
 <!-- ========================= -->
@@ -139,14 +139,14 @@ rather than habit.
 <!--       MEDIUM BLOGS        -->
 <!-- ========================= -->
 
-<h3>Writing</h3>
+<h3 style="margin-bottom: 0.5em;">Writing</h3>
 
-<p style="max-width: 750px; color: #9aa0a6;">
+<p style="max-width: 750px; color: #9aa0a6; margin-bottom: 0.5em;">
 I occasionally write about backend systems and architecture to clarify my own thinking.
 A couple of recent pieces are linked below.
 </p>
 
-<div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 1em;">
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
   <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0">
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"
