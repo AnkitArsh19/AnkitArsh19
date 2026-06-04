@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=300"/>
+  <img src="https://zane-nostalgia.kiyo-n-zane.com/scenes/cubes/api?bannerText=Hi%2C+I%E2%80%99m+Ankit+Arsh&bannerColor=%23949494&textColor=%23FFFFFF&animateVariant=sequential&geoSeed=cQBT8WRhlN&rotation=0&height=200"/>
 </p>
 
 <!-- ========================= -->
@@ -16,10 +16,10 @@ and where abstractions start to leak.
 </p>
 
 <p style="max-width: 750px;">
-Most of my work revolves around <b>Java and backend development</b>. I’m comfortable with frontend,
+Most of my work revolves around <b>Java and backend development</b>. I'm comfortable with frontend,
 but backend aligns more naturally with how I think: APIs, data flow, state management,
-performance trade-offs, and architectures that don’t collapse as requirements evolve.
-I’m still learning, but I’m serious and methodical about it, and I prefer depth over speed.
+performance trade-offs, and architectures that don't collapse as requirements evolve.
+I'm still learning, but I'm serious and methodical about it, and I prefer depth over speed.
 </p>
 
 <hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
@@ -66,13 +66,13 @@ mostly be polishing, and I chose to move on to problems that required new archit
 <h4>Crescendo</h4>
 
 <p style="max-width: 750px;">
-<b>Crescendo</b> is a backend-first project I’ve recently started, inspired by systems
+<b>Crescendo</b> is a backend-first project I've recently started, inspired by systems
 like Zapier and Resend. It exists primarily as a learning ground for architectural
 design rather than rapid feature development.
 </p>
 
 <p style="max-width: 750px;">
-Before writing significant code, I’ve been studying and planning around concepts
+Before writing significant code, I've been studying and planning around concepts
 such as <b>CQRS</b>, <b>domain-driven design</b>, <b>hexagonal architecture</b>,
 and <b>event-driven systems</b>.
 These ideas are shaping how the system is structured from the beginning,
