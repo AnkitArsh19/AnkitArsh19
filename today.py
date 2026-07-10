@@ -226,7 +226,7 @@ def get_language_breakdown():
     query = '''
     query($login: String!) {
         user(login: $login) {
-            repositories(first: 100, ownerAffiliations: OWNER, orderBy: {field: PUSHED_AT, direction: DESC}) {
+            repositories(first: 100, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
                 nodes {
                     languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
                         edges {
@@ -258,7 +258,7 @@ def get_language_breakdown():
         pct = round((l[1] / total_size) * 100)
         if pct > 0:
             top.append(f"{l[0]} {pct}%")
-    return ", ".join(top[:6])
+    return ", ".join(top[:4]), ", ".join(top[4:8])
 
 def get_recent_activity():
     query_count('recent_activity')
@@ -299,7 +299,8 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     
     # New fields
     find_and_replace(root, 'age_data', age_data)
-    find_and_replace(root, 'lang_data', lang_data)
+    find_and_replace(root, 'lang_data', lang_data[0])
+    find_and_replace(root, 'lang_data_2', lang_data[1])
     find_and_replace(root, 'recent_data', recent_data)
     find_and_replace(root, 'medium_articles', medium_data[0])
     find_and_replace(root, 'medium_claps', medium_data[1])

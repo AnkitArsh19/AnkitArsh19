@@ -48,7 +48,8 @@ text, tspan {white-space: pre;}
 
 <tspan x="410" y="210" class="key">Lang.Program</tspan>     <tspan x="560" y="210" class="cc">│</tspan> <tspan x="580" y="210" class="value">Java, Python, C, JavaScript</tspan>
 <tspan x="410" y="230" class="key">Lang.Markup</tspan>      <tspan x="560" y="230" class="cc">│</tspan> <tspan x="580" y="230" class="value">HTML, CSS, JSON</tspan>
-<tspan x="410" y="250" class="key">Lang.Breakdown</tspan>   <tspan x="560" y="250" class="cc">│</tspan> <tspan x="580" y="250" class="value" id="lang_data">Java 65%, JavaScript 7%, C++ 6%, C# 5%, PHP 5%, CSS 2%</tspan>
+<tspan x="410" y="250" class="key">Lang.Breakdown</tspan>   <tspan x="560" y="250" class="cc">│</tspan> <tspan x="580" y="250" class="value" id="lang_data">Java 65%, JavaScript 7%, C++ 6%, C# 5%</tspan>
+<tspan x="410" y="270" class="key"></tspan>                 <tspan x="560" y="270" class="cc">│</tspan> <tspan x="580" y="270" class="value" id="lang_data_2">PHP 5%, CSS 2%</tspan>
 
 <tspan x="410" y="290" class="key">Hobbies.Soft</tspan>     <tspan x="560" y="290" class="cc">│</tspan> <tspan x="580" y="290" class="value">System Design, Backend, System Architecture</tspan>
 
