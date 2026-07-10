@@ -258,7 +258,7 @@ def get_language_breakdown():
         pct = round((l[1] / total_size) * 100)
         if pct > 0:
             top.append(f"{l[0]} {pct}%")
-    return ", ".join(top[:4]), ", ".join(top[4:8])
+    return ", ".join(top[:4]), ", ".join(top[4:7]), ", ".join(top[7:10])
 
 def get_recent_activity():
     query_count('recent_activity')
@@ -301,6 +301,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     find_and_replace(root, 'age_data', age_data)
     find_and_replace(root, 'lang_data', lang_data[0])
     find_and_replace(root, 'lang_data_2', lang_data[1])
+    find_and_replace(root, 'lang_data_3', lang_data[2])
     find_and_replace(root, 'recent_data', recent_data)
     find_and_replace(root, 'medium_articles', medium_data[0])
     find_and_replace(root, 'medium_claps', medium_data[1])
