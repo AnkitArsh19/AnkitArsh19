@@ -48,7 +48,7 @@ text, tspan {white-space: pre;}
 
 <tspan x="410" y="210" class="key">Lang.Program</tspan>     <tspan x="560" y="210" class="cc">│</tspan> <tspan x="580" y="210" class="value">Java, Python, C, JavaScript</tspan>
 <tspan x="410" y="230" class="key">Lang.Markup</tspan>      <tspan x="560" y="230" class="cc">│</tspan> <tspan x="580" y="230" class="value">HTML, CSS, JSON</tspan>
-<tspan x="410" y="250" class="key">Lang.Breakdown</tspan>   <tspan x="560" y="250" class="cc">│</tspan> <tspan x="580" y="250" class="value" id="lang_data">Java 65%, JavaScript 7%, C++ 6%</tspan>
+<tspan x="410" y="250" class="key">Lang.Breakdown</tspan>   <tspan x="560" y="250" class="cc">│</tspan> <tspan x="580" y="250" class="value" id="lang_data">Java 65%, JavaScript 7%, C++ 6%, C# 5%, PHP 5%, CSS 2%</tspan>
 
 <tspan x="410" y="290" class="key">Hobbies.Soft</tspan>     <tspan x="560" y="290" class="cc">│</tspan> <tspan x="580" y="290" class="value">System Design, Backend, System Architecture</tspan>
 
@@ -59,8 +59,8 @@ text, tspan {white-space: pre;}
 <tspan x="410" y="410" font-weight="bold" fill="#a5d6ff">~ ❯ ./github_stats.sh</tspan>
 <tspan x="410" y="440" class="key">Repos &amp; Stars</tspan>    <tspan x="560" y="440" class="cc">│</tspan> <tspan x="580" y="440" class="value" id="repo_data">15</tspan><tspan class="value"> Repos (</tspan><tspan class="value" id="contrib_data">13</tspan><tspan class="value"> Contributions) / </tspan><tspan class="value" id="star_data">14</tspan><tspan class="value"> Stars</tspan>
 <tspan x="410" y="460" class="key">Recent Push</tspan>      <tspan x="560" y="460" class="cc">│</tspan> <tspan x="580" y="460" class="value" id="recent_data">Pushed to AnkitArsh19</tspan>
-<tspan x="410" y="480" class="key">Commits</tspan>          <tspan x="560" y="480" class="cc">│</tspan> <tspan x="580" y="480" class="value" id="commit_data">214</tspan>
-<tspan x="410" y="500" class="key">Lines of Code</tspan>    <tspan x="560" y="500" class="cc">│</tspan> <tspan x="580" y="500" class="value" id="loc_data">1,568,627</tspan> <tspan class="cc"> ( </tspan><tspan class="addColor" id="loc_add">1,630,706</tspan><tspan class="addColor">++</tspan><tspan class="cc"> , </tspan><tspan class="delColor" id="loc_del">62,079</tspan><tspan class="delColor">--</tspan><tspan class="cc"> )</tspan>
+<tspan x="410" y="480" class="key">Commits</tspan>          <tspan x="560" y="480" class="cc">│</tspan> <tspan x="580" y="480" class="value" id="commit_data">215</tspan>
+<tspan x="410" y="500" class="key">Lines of Code</tspan>    <tspan x="560" y="500" class="cc">│</tspan> <tspan x="580" y="500" class="value" id="loc_data">1,568,600</tspan> <tspan class="cc"> ( </tspan><tspan class="addColor" id="loc_add">1,630,778</tspan><tspan class="addColor">++</tspan><tspan class="cc"> , </tspan><tspan class="delColor" id="loc_del">62,178</tspan><tspan class="delColor">--</tspan><tspan class="cc"> )</tspan>
 <tspan x="410" y="520" class="key">Medium Stats</tspan>     <tspan x="560" y="520" class="cc">│</tspan> <tspan x="580" y="520" class="value" id="medium_articles">15</tspan><tspan class="value"> Articles / </tspan><tspan class="value" id="medium_claps">14</tspan><tspan class="value"> Claps</tspan>
 </text>
 </svg>
