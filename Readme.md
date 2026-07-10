@@ -66,23 +66,19 @@ mostly be polishing, and I chose to move on to problems that required new archit
 <h4>Crescendo</h4>
 
 <p style="max-width: 750px;">
-<b>Crescendo</b> is a backend-first project I've recently started, inspired by systems
-like Zapier and Resend. It exists primarily as a learning ground for architectural
-design rather than rapid feature development.
+<b>Crescendo</b> is a production-grade workflow automation platform spanning 114+ app integrations.
+It features a powerful async execution engine built with Redis Streams, transactional outbox, and distributed locks.
 </p>
 
 <p style="max-width: 750px;">
-Before writing significant code, I've been studying and planning around concepts
-such as <b>CQRS</b>, <b>domain-driven design</b>, <b>hexagonal architecture</b>,
-and <b>event-driven systems</b>.
-These ideas are shaping how the system is structured from the beginning,
-even though not all of them are fully implemented yet.
+The system was designed from the ground up using <b>CQRS</b> and <b>Event-Driven Architecture</b>,
+ensuring high reliability with features like manual ACK, dead letter queues, and PEL reclaim.
+I also implemented a zero-code-change extensibility model for integrations and native PostgreSQL search/metrics rollups.
 </p>
 
 <p style="max-width: 750px;">
-This project moves intentionally slowly. The focus is on defining clear boundaries,
-understanding trade-offs, and avoiding accidental complexity.
-Crescendo is where architectural theory meets practical backend design.
+This project demonstrates my ability to tackle complex distributed system challenges beyond standard CRUD, focusing on real-world reliability and scalability.
+Check it out live at <a href="https://app.crescendo.run">app.crescendo.run</a>.
 </p>
 
 <hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
@@ -168,4 +164,16 @@ A couple of recent pieces are linked below.
     />
   </a>
 </div>
- 
+
+<hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
+
+<!-- ========================= -->
+<!--        STATS              -->
+<!-- ========================= -->
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AnkitArsh19/AnkitArsh19/main/dark_mode.svg">
+    <img alt="Ankit Arsh's GitHub Stats" src="https://raw.githubusercontent.com/AnkitArsh19/AnkitArsh19/main/light_mode.svg">
+  </picture>
+</div>
