@@ -28,12 +28,13 @@ def simple_request(func_name, query, variables):
         return request
     raise Exception(func_name, ' has failed with a', request.status_code, request.text, QUERY_COUNT)
 
-def graph_repos_stars(count_type, owner_affiliation, cursor=None, add_loc=0, del_loc=0):
+def graph_repos_stars(count_type, owner_affiliation, cursor=None, add_loc=0, del_loc=0, is_fork=None):
     query_count('graph_repos_stars')
+    fork_filter = "" if is_fork is None else f", isFork: {'true' if is_fork else 'false'}"
     query = '''
     query ($owner_affiliation: [RepositoryAffiliation], $login: String!, $cursor: String) {
         user(login: $login) {
-            repositories(first: 100, after: $cursor, ownerAffiliations: $owner_affiliation) {
+            repositories(first: 100, after: $cursor, ownerAffiliations: $owner_affiliation''' + fork_filter + ''') {
                 totalCount
                 edges {
                     node {
@@ -252,11 +253,12 @@ def get_language_breakdown():
     if not sorted_langs:
         return "None"
     total_size = sum([l[1] for l in sorted_langs])
-    top_3 = []
-    for l in sorted_langs[:3]:
+    top = []
+    for l in sorted_langs:
         pct = round((l[1] / total_size) * 100)
-        top_3.append(f"{l[0]} {pct}%")
-    return ", ".join(top_3)
+        if pct > 0:
+            top.append(f"{l[0]} {pct}%")
+    return ", ".join(top[:6])
 
 def get_recent_activity():
     query_count('recent_activity')
@@ -277,15 +279,11 @@ def get_recent_activity():
     return "None"
 
 def get_medium_stats(username):
-    try:
-        req = requests.get(f'https://medium.com/feed/@{username}')
-        if req.status_code == 200:
-            root = etree.fromstring(req.content)
-            items = root.xpath('//item')
-            return f"{len(items)} Articles"
-    except Exception as e:
-        pass
-    return "0 Articles"
+    # Medium RSS feed only returns up to 10 articles and doesn't expose claps.
+    # Using user-provided values:
+    articles = "15"
+    claps = "14" # Update this value with your actual claps
+    return articles, claps
 
 def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, lang_data, recent_data, medium_data):
     tree = etree.parse(filename)
@@ -303,7 +301,8 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     find_and_replace(root, 'age_data', age_data)
     find_and_replace(root, 'lang_data', lang_data)
     find_and_replace(root, 'recent_data', recent_data)
-    find_and_replace(root, 'medium_data', medium_data)
+    find_and_replace(root, 'medium_articles', medium_data[0])
+    find_and_replace(root, 'medium_claps', medium_data[1])
 
     tree.write(filename, encoding='utf-8', xml_declaration=True)
 
@@ -370,7 +369,7 @@ if __name__ == '__main__':
     commit_data, commit_time = perf_counter(commit_counter, 7)
     star_data, star_time = perf_counter(graph_repos_stars, 'stars', ['OWNER'])
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
-    contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
+    contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], None, 0, 0, False)
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
     
     # New metrics

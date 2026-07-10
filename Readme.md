@@ -3,6 +3,19 @@
 </p>
 
 <!-- ========================= -->
+<!--        STATS              -->
+<!-- ========================= -->
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AnkitArsh19/AnkitArsh19/main/dark_mode.svg">
+    <img alt="Ankit Arsh's GitHub Stats" src="https://raw.githubusercontent.com/AnkitArsh19/AnkitArsh19/main/light_mode.svg">
+  </picture>
+</div>
+
+<hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
+
+<!-- ========================= -->
 <!--        INTRO              -->
 <!-- ========================= -->
 
@@ -78,7 +91,7 @@ I also implemented a zero-code-change extensibility model for integrations and n
 
 <p style="max-width: 750px;">
 This project demonstrates my ability to tackle complex distributed system challenges beyond standard CRUD, focusing on real-world reliability and scalability.
-Check it out live at <a href="https://app.crescendo.run">app.crescendo.run</a>.
+I am actively working on and developing this system.
 </p>
 
 <hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
@@ -165,15 +178,4 @@ A couple of recent pieces are linked below.
   </a>
 </div>
 
-<hr style="border: none; border-top: 1px solid #30363d; margin: 2em 0;" />
 
-<!-- ========================= -->
-<!--        STATS              -->
-<!-- ========================= -->
-
-<div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AnkitArsh19/AnkitArsh19/main/dark_mode.svg">
-    <img alt="Ankit Arsh's GitHub Stats" src="https://raw.githubusercontent.com/AnkitArsh19/AnkitArsh19/main/light_mode.svg">
-  </picture>
-</div>
