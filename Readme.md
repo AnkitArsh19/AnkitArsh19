@@ -147,12 +147,13 @@ A couple of recent pieces are linked below.
 </p>
 
 <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+  
   <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0">
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/0"
       alt="Recent Medium Article 0"
-      width="400"
-      height="300"
+      width="500"
+      height="70"
       style="border-radius: 8px;"
     />
   </a>
@@ -161,8 +162,8 @@ A couple of recent pieces are linked below.
     <img 
       src="https://github-readme-medium-recent-article.vercel.app/medium/@ankitarsh19/1"
       alt="Recent Medium Article 1"
-      width="400"
-      height="300"
+      width="500"
+      height="70"
       style="border-radius: 8px;"
     />
   </a>
