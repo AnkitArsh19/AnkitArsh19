@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, monospace" width="985px" height="580px" font-size="14.5px">
+<svg xmlns="http://www.w3.org/2000/svg" font-family="'Fira Code', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace" width="985px" height="580px" font-size="14.5px">
 <style>
-.key {fill: #d73a49;}
-.value {fill: #0366d6;}
-.addColor {fill: #28a745;}
-.delColor {fill: #d73a49;}
-.cc {fill: #6a737d;}
+.key {fill: #000000;}
+.value {fill: #000000;}
+.addColor {fill: #000000;}
+.delColor {fill: #000000;}
+.cc {fill: #000000;}
 text, tspan {white-space: pre;}
 </style>
 <rect width="985px" height="580px" fill="#ffffff" rx="15"/>
-<text x="15" y="30" fill="#24292e" class="ascii">
+<text x="15" y="30" fill="#000000" class="ascii">
 <tspan x="15" y="30">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠇⠀⠀⠀⠀</tspan>
 <tspan x="15" y="50">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡐⠅⠀⠀⠀⠀</tspan>
 <tspan x="15" y="70">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡐⠀⠈⣆⡤⠀⠀</tspan>
@@ -36,8 +36,8 @@ text, tspan {white-space: pre;}
 <tspan x="15" y="490"> </tspan>
 <tspan x="15" y="510"> </tspan>
 </text>
-<text x="410" y="30" fill="#24292e">
-<tspan x="410" y="40" font-weight="bold" fill="#0366d6">~ ❯ whoami ➜ ankit arsh</tspan>
+<text x="410" y="30" fill="#000000">
+<tspan x="410" y="40" font-weight="bold" fill="#000000">~ ❯ whoami ➜ ankit arsh</tspan>
 
 <tspan x="410" y="70" class="key">Role</tspan>             <tspan x="560" y="70" class="cc">│</tspan> <tspan x="580" y="70" class="value">Full Stack Developer</tspan>
 <tspan x="410" y="90" class="key">OS</tspan>               <tspan x="560" y="90" class="cc">│</tspan> <tspan x="580" y="90" class="value">Windows 11, macOS Tahoe 26</tspan>
@@ -58,7 +58,7 @@ text, tspan {white-space: pre;}
 <tspan x="410" y="370" class="key">LinkedIn</tspan>         <tspan x="560" y="370" class="cc">│</tspan> <tspan x="580" y="370" class="value">linkedin.com/in/ankitarsh19/</tspan>
 <tspan x="410" y="390" class="key">Portfolio</tspan>        <tspan x="560" y="390" class="cc">│</tspan> <tspan x="580" y="390" class="value">ankitarsh.me</tspan>
 
-<tspan x="410" y="430" font-weight="bold" fill="#0366d6">~ ❯ ./github_stats.sh</tspan>
+<tspan x="410" y="430" font-weight="bold" fill="#000000">~ ❯ ./github_stats.sh</tspan>
 <tspan x="410" y="460" class="key">Repos &amp; Stars</tspan>    <tspan x="560" y="460" class="cc">│</tspan> <tspan x="580" y="460" class="value" id="repo_data">15</tspan><tspan class="value"> Repos (</tspan><tspan class="value" id="contrib_data">13</tspan><tspan class="value"> Contributions) / </tspan><tspan class="value" id="star_data">14</tspan><tspan class="value"> Stars</tspan>
 <tspan x="410" y="480" class="key">Recent Push</tspan>      <tspan x="560" y="480" class="cc">│</tspan> <tspan x="580" y="480" class="value" id="recent_data">Pushed to crescendo</tspan>
 <tspan x="410" y="500" class="key">Commits</tspan>          <tspan x="560" y="500" class="cc">│</tspan> <tspan x="580" y="500" class="value" id="commit_data">219</tspan>

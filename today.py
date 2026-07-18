@@ -262,20 +262,13 @@ def get_language_breakdown():
 
 def get_recent_activity():
     query_count('recent_activity')
-    query = '''
-    query($login: String!) {
-        user(login: $login) {
-            repositories(first: 1, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], orderBy: {field: PUSHED_AT, direction: DESC}) {
-                nodes {
-                    name
-                }
-            }
-        }
-    }'''
-    request = simple_request('recent_activity', query, {'login': USER_NAME})
-    repos = request.json()['data']['user']['repositories']['nodes']
-    if repos:
-        return f"Pushed to {repos[0]['name']}"
+    request = requests.get(f'https://api.github.com/users/{USER_NAME}/events', headers=HEADERS)
+    if request.status_code == 200:
+        events = request.json()
+        for event in events:
+            if event.get('type') == 'PushEvent' and event.get('actor', {}).get('login') == USER_NAME:
+                repo_name = event['repo']['name'].split('/')[-1]
+                return f"Pushed to {repo_name}"
     return "None"
 
 def get_medium_stats(username):
