@@ -55,11 +55,21 @@ def graph_repos_stars(count_type, owner_affiliation, cursor=None, add_loc=0, del
     }'''
     variables = {'owner_affiliation': owner_affiliation, 'login': USER_NAME, 'cursor': cursor}
     request = simple_request(graph_repos_stars.__name__, query, variables)
-    if request.status_code == 200:
-        if count_type == 'repos':
-            return request.json()['data']['user']['repositories']['totalCount']
-        elif count_type == 'stars':
-            return stars_counter(request.json()['data']['user']['repositories']['edges'])
+    res_json = request.json()
+    user_data = res_json.get('data', {}).get('user') if res_json.get('data') else None
+    if not user_data or 'repositories' not in user_data:
+        return 0
+
+    repo_data = user_data['repositories']
+    if count_type == 'repos':
+        return repo_data.get('totalCount', 0)
+    elif count_type == 'stars':
+        edges = repo_data.get('edges', []) or []
+        current_stars = stars_counter(edges)
+        page_info = repo_data.get('pageInfo', {})
+        if page_info.get('hasNextPage'):
+            return current_stars + graph_repos_stars(count_type, owner_affiliation, page_info.get('endCursor'), add_loc, del_loc, is_fork)
+        return current_stars
 
 def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, deletion_total=0, my_commits=0, cursor=None):
     query_count('recursive_loc')
@@ -98,26 +108,42 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
     variables = {'repo_name': repo_name, 'owner': owner, 'cursor': cursor}
     request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS)
     if request.status_code == 200:
-        if request.json()['data']['repository']['defaultBranchRef'] != None:
-            return loc_counter_one_repo(owner, repo_name, data, cache_comment, request.json()['data']['repository']['defaultBranchRef']['target']['history'], addition_total, deletion_total, my_commits)
-        else: return 0
+        res_json = request.json()
+        repo = res_json.get('data', {}).get('repository') if res_json.get('data') else None
+        if repo and repo.get('defaultBranchRef') and repo['defaultBranchRef'].get('target'):
+            history = repo['defaultBranchRef']['target'].get('history')
+            if history:
+                return loc_counter_one_repo(owner, repo_name, data, cache_comment, history, addition_total, deletion_total, my_commits)
+        return 0
     force_close_file(data, cache_comment)
     if request.status_code == 403:
         raise Exception('Too many requests in a short amount of time!\nYou\'ve hit the non-documented anti-abuse limit!')
     raise Exception('recursive_loc() has failed with a', request.status_code, request.text, QUERY_COUNT)
 
 def loc_counter_one_repo(owner, repo_name, data, cache_comment, history, addition_total, deletion_total, my_commits):
-    for node in history['edges']:
-        if node['node']['author']['user'] and node['node']['author']['user'].get('id') == OWNER_ID['id']:
+    edges = history.get('edges', []) if history else []
+    for node in edges:
+        if not node or not isinstance(node, dict):
+            continue
+        commit_node = node.get('node')
+        if not commit_node or not isinstance(commit_node, dict):
+            continue
+        author = commit_node.get('author')
+        user = author.get('user') if isinstance(author, dict) else None
+        if user and isinstance(user, dict) and user.get('id') == OWNER_ID.get('id'):
             my_commits += 1
-            addition_total += node['node']['additions']
-            deletion_total += node['node']['deletions']
+            addition_total += commit_node.get('additions', 0)
+            deletion_total += commit_node.get('deletions', 0)
 
-    if history['edges'] == [] or not history['pageInfo']['hasNextPage']:
+    page_info = history.get('pageInfo', {}) if history else {}
+    if not edges or not page_info.get('hasNextPage'):
         return addition_total, deletion_total, my_commits
-    else: return recursive_loc(owner, repo_name, data, cache_comment, addition_total, deletion_total, my_commits, history['pageInfo']['endCursor'])
+    else:
+        return recursive_loc(owner, repo_name, data, cache_comment, addition_total, deletion_total, my_commits, page_info.get('endCursor'))
 
-def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None, edges=[]):
+def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None, edges=None):
+    if edges is None:
+        edges = []
     query_count('loc_query')
     query = '''
     query ($owner_affiliation: [RepositoryAffiliation], $login: String!, $cursor: String) {
@@ -148,11 +174,19 @@ def loc_query(owner_affiliation, comment_size=0, force_cache=False, cursor=None,
     }'''
     variables = {'owner_affiliation': owner_affiliation, 'login': USER_NAME, 'cursor': cursor}
     request = simple_request(loc_query.__name__, query, variables)
-    if request.json()['data']['user']['repositories']['pageInfo']['hasNextPage']:
-        edges += request.json()['data']['user']['repositories']['edges']
-        return loc_query(owner_affiliation, comment_size, force_cache, request.json()['data']['user']['repositories']['pageInfo']['endCursor'], edges)
+    res_json = request.json()
+    user_data = res_json.get('data', {}).get('user') if res_json.get('data') else None
+    if not user_data or 'repositories' not in user_data:
+        return cache_builder(edges, comment_size, force_cache)
+
+    repo_data = user_data['repositories']
+    current_edges = [e for e in (repo_data.get('edges') or []) if e and isinstance(e, dict) and e.get('node')]
+    edges = edges + current_edges
+    page_info = repo_data.get('pageInfo', {})
+    if page_info.get('hasNextPage'):
+        return loc_query(owner_affiliation, comment_size, force_cache, page_info.get('endCursor'), edges)
     else:
-        return cache_builder(edges + request.json()['data']['user']['repositories']['edges'], comment_size, force_cache)
+        return cache_builder(edges, comment_size, force_cache)
 
 def cache_builder(edges, comment_size, force_cache, loc_add=0, loc_del=0):
     cached = True
@@ -178,36 +212,50 @@ def cache_builder(edges, comment_size, force_cache, loc_add=0, loc_del=0):
     cache_comment = data[:comment_size]
     data = data[comment_size:]
     for index in range(len(edges)):
+        if index >= len(data):
+            break
         parts = data[index].split()
+        if len(parts) < 2:
+            continue
         repo_hash = parts[0]
         commit_count = parts[1]
-        if repo_hash == hashlib.sha256(edges[index]['node']['nameWithOwner'].encode('utf-8')).hexdigest():
+        node = edges[index].get('node') if isinstance(edges[index], dict) else None
+        if not node or not node.get('nameWithOwner'):
+            continue
+        if repo_hash == hashlib.sha256(node['nameWithOwner'].encode('utf-8')).hexdigest():
             try:
-                if int(commit_count) != edges[index]['node']['defaultBranchRef']['target']['history']['totalCount']:
-                    owner, repo_name = edges[index]['node']['nameWithOwner'].split('/')
+                branch_ref = node.get('defaultBranchRef')
+                target = branch_ref.get('target') if branch_ref else None
+                history = target.get('history') if target else None
+                total_count = history.get('totalCount') if history else None
+                if total_count is not None and int(commit_count) != total_count:
+                    owner, repo_name = node['nameWithOwner'].split('/')
                     loc = recursive_loc(owner, repo_name, data, cache_comment)
-                    if loc != 0:
-                        data[index] = repo_hash + ' ' + str(edges[index]['node']['defaultBranchRef']['target']['history']['totalCount']) + ' ' + str(loc[2]) + ' ' + str(loc[0]) + ' ' + str(loc[1]) + '\n'
-            except TypeError:
+                    if loc != 0 and isinstance(loc, (list, tuple)):
+                        data[index] = repo_hash + ' ' + str(total_count) + ' ' + str(loc[2]) + ' ' + str(loc[0]) + ' ' + str(loc[1]) + '\n'
+            except (TypeError, KeyError, AttributeError, IndexError):
                 data[index] = repo_hash + ' 0 0 0 0\n'
     with open(filename, 'w') as f:
         f.writelines(cache_comment)
         f.writelines(data)
     for line in data:
         loc = line.split()
-        loc_add += int(loc[3])
-        loc_del += int(loc[4])
+        if len(loc) >= 5:
+            loc_add += int(loc[3])
+            loc_del += int(loc[4])
     return [loc_add, loc_del, loc_add - loc_del, cached]
 
 def flush_cache(edges, filename, comment_size):
-    with open(filename, 'r') as f:
-        data = []
-        if comment_size > 0:
-            data = f.readlines()[:comment_size]
+    data = []
+    if os.path.exists(filename):
+        with open(filename, 'r') as f:
+            if comment_size > 0:
+                data = f.readlines()[:comment_size]
     with open(filename, 'w') as f:
         f.writelines(data)
         for node in edges:
-            f.write(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0\n')
+            if node and isinstance(node, dict) and node.get('node') and 'nameWithOwner' in node['node']:
+                f.write(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0\n')
 
 def force_close_file(data, cache_comment):
     filename = 'cache/'+hashlib.sha256(USER_NAME.encode('utf-8')).hexdigest()+'.txt'
@@ -218,7 +266,15 @@ def force_close_file(data, cache_comment):
 
 def stars_counter(data):
     total_stars = 0
-    for node in data: total_stars += node['node']['stargazers']['totalCount']
+    if not data:
+        return 0
+    for node in data:
+        if node and isinstance(node, dict):
+            repo_node = node.get('node')
+            if repo_node and isinstance(repo_node, dict):
+                stargazers = repo_node.get('stargazers')
+                if stargazers and isinstance(stargazers, dict):
+                    total_stars += stargazers.get('totalCount', 0)
     return total_stars
 
 def get_language_breakdown():
@@ -241,34 +297,47 @@ def get_language_breakdown():
         }
     }'''
     request = simple_request('language_breakdown', query, {'login': USER_NAME})
-    repos = request.json()['data']['user']['repositories']['nodes']
+    res_json = request.json()
+    user_data = res_json.get('data', {}).get('user') if res_json.get('data') else None
+    if not user_data or not user_data.get('repositories'):
+        return "None", "", ""
+    repos = user_data['repositories'].get('nodes', []) or []
     langs = {}
     for repo in repos:
-        if repo.get('languages') and repo['languages'].get('edges'):
+        if repo and isinstance(repo, dict) and repo.get('languages') and repo['languages'].get('edges'):
             for edge in repo['languages']['edges']:
-                name = edge['node']['name']
-                size = edge['size']
-                langs[name] = langs.get(name, 0) + size
+                if edge and isinstance(edge, dict) and edge.get('node') and 'name' in edge['node'] and 'size' in edge:
+                    name = edge['node']['name']
+                    size = edge.get('size', 0)
+                    langs[name] = langs.get(name, 0) + size
     sorted_langs = sorted(langs.items(), key=lambda item: item[1], reverse=True)
     if not sorted_langs:
-        return "None"
+        return "None", "", ""
     total_size = sum([l[1] for l in sorted_langs])
+    if total_size == 0:
+        return "None", "", ""
     top = []
     for l in sorted_langs:
         pct = round((l[1] / total_size) * 100)
         if pct > 0:
             top.append(f"{l[0]} {pct}%")
-    return ", ".join(top[:4]), ", ".join(top[4:7]), ", ".join(top[7:10])
+    line1 = ", ".join(top[:4]) if top[:4] else "None"
+    line2 = ", ".join(top[4:7]) if top[4:7] else ""
+    line3 = ", ".join(top[7:10]) if top[7:10] else ""
+    return line1, line2, line3
 
 def get_recent_activity():
     query_count('recent_activity')
     request = requests.get(f'https://api.github.com/users/{USER_NAME}/events', headers=HEADERS)
     if request.status_code == 200:
         events = request.json()
-        for event in events:
-            if event.get('type') == 'PushEvent' and event.get('actor', {}).get('login') == USER_NAME:
-                repo_name = event['repo']['name'].split('/')[-1]
-                return f"Pushed to {repo_name}"
+        if isinstance(events, list):
+            for event in events:
+                if isinstance(event, dict) and event.get('type') == 'PushEvent' and event.get('actor', {}).get('login') == USER_NAME:
+                    repo = event.get('repo', {})
+                    repo_name = repo.get('name', '').split('/')[-1]
+                    if repo_name:
+                        return f"Pushed to {repo_name}"
     return "None"
 
 def get_medium_stats(username):
@@ -292,9 +361,9 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     
     # New fields
     find_and_replace(root, 'age_data', age_data)
-    find_and_replace(root, 'lang_data', lang_data[0])
-    find_and_replace(root, 'lang_data_2', lang_data[1])
-    find_and_replace(root, 'lang_data_3', lang_data[2])
+    find_and_replace(root, 'lang_data', lang_data[0] if len(lang_data) > 0 else "")
+    find_and_replace(root, 'lang_data_2', lang_data[1] if len(lang_data) > 1 else "")
+    find_and_replace(root, 'lang_data_3', lang_data[2] if len(lang_data) > 2 else "")
     find_and_replace(root, 'recent_data', recent_data)
     find_and_replace(root, 'medium_articles', medium_data[0])
     find_and_replace(root, 'medium_claps', medium_data[1])
@@ -311,11 +380,15 @@ def find_and_replace(root, element_id, new_text):
 def commit_counter(comment_size):
     total_commits = 0
     filename = 'cache/'+hashlib.sha256(USER_NAME.encode('utf-8')).hexdigest()+'.txt'
+    if not os.path.exists(filename):
+        return 0
     with open(filename, 'r') as f:
         data = f.readlines()
     data = data[comment_size:]
     for line in data:
-        total_commits += int(line.split()[2])
+        parts = line.split()
+        if len(parts) >= 3:
+            total_commits += int(parts[2])
     return total_commits
 
 def user_getter(username):
@@ -329,7 +402,10 @@ def user_getter(username):
     }'''
     variables = {'login': username}
     request = simple_request(user_getter.__name__, query, variables)
-    return {'id': request.json()['data']['user']['id']}, request.json()['data']['user']['createdAt']
+    user_data = request.json().get('data', {}).get('user')
+    if not user_data:
+        raise Exception(f"User {username} not found: {request.text}")
+    return {'id': user_data['id']}, user_data['createdAt']
 
 def follower_getter(username):
     query_count('follower_getter')
@@ -342,7 +418,10 @@ def follower_getter(username):
         }
     }'''
     request = simple_request(follower_getter.__name__, query, {'login': username})
-    return int(request.json()['data']['user']['followers']['totalCount'])
+    user_data = request.json().get('data', {}).get('user')
+    if not user_data or not user_data.get('followers'):
+        return 0
+    return int(user_data['followers']['totalCount'])
 
 def query_count(funct_id):
     global QUERY_COUNT
@@ -375,4 +454,4 @@ if __name__ == '__main__':
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index])
 
     svg_overwrite('dark_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], lang_data, recent_data, medium_data)
-    svg_overwrite('light_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], lang_data, recent_data, medium_data)
+    svg_overwrite('light_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], lang_data, recent_data, medium_data)
