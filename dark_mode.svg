@@ -41,7 +41,7 @@ text, tspan {white-space: pre;}
 
 <tspan x="410" y="70" class="key">Role</tspan>             <tspan x="560" y="70" class="cc">│</tspan> <tspan x="580" y="70" class="value">Full Stack Developer</tspan>
 <tspan x="410" y="90" class="key">OS</tspan>               <tspan x="560" y="90" class="cc">│</tspan> <tspan x="580" y="90" class="value">Windows 11, macOS Tahoe 26</tspan>
-<tspan x="410" y="110" class="key">Uptime</tspan>           <tspan x="560" y="110" class="cc">│</tspan> <tspan x="580" y="110" class="value" id="age_data">22 years, 1 month, 9 days</tspan>
+<tspan x="410" y="110" class="key">Uptime</tspan>           <tspan x="560" y="110" class="cc">│</tspan> <tspan x="580" y="110" class="value" id="age_data">22 years, 1 month, 10 days</tspan>
 <tspan x="410" y="130" class="key">Host</tspan>             <tspan x="560" y="130" class="cc">│</tspan> <tspan x="580" y="130" class="value">KIIT University</tspan>
 <tspan x="410" y="150" class="key">Kernel</tspan>           <tspan x="560" y="150" class="cc">│</tspan> <tspan x="580" y="150" class="value">B.Tech in Information Technology</tspan>
 <tspan x="410" y="170" class="key">IDE</tspan>              <tspan x="560" y="170" class="cc">│</tspan> <tspan x="580" y="170" class="value">IntelliJ IDEA, VS Code, Google Antigravity</tspan>
