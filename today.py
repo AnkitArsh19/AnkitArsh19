@@ -7,7 +7,8 @@ import time
 import hashlib
 
 # Fine-grained personal access token with All Repositories access:
-HEADERS = {'authorization': 'token '+ os.environ.get('ACCESS_TOKEN', '')}
+ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN', '').strip()
+HEADERS = {'authorization': 'token ' + ACCESS_TOKEN} if ACCESS_TOKEN else {}
 USER_NAME = os.environ.get('USER_NAME', 'AnkitArsh19')
 QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0, 'language_breakdown': 0, 'recent_activity': 0}
 
@@ -40,6 +41,7 @@ def graph_repos_stars(count_type, owner_affiliation, cursor=None, add_loc=0, del
                     node {
                         ... on Repository {
                             nameWithOwner
+                            stargazerCount
                             stargazers {
                                 totalCount
                             }
@@ -272,10 +274,28 @@ def stars_counter(data):
         if node and isinstance(node, dict):
             repo_node = node.get('node')
             if repo_node and isinstance(repo_node, dict):
-                stargazers = repo_node.get('stargazers')
-                if stargazers and isinstance(stargazers, dict):
-                    total_stars += stargazers.get('totalCount', 0)
+                count = repo_node.get('stargazerCount')
+                if count is not None:
+                    total_stars += count
+                else:
+                    stargazers = repo_node.get('stargazers')
+                    if stargazers and isinstance(stargazers, dict):
+                        total_stars += stargazers.get('totalCount', 0)
     return total_stars
+
+def get_stars_rest(username):
+    try:
+        headers = {}
+        if ACCESS_TOKEN:
+            headers['Authorization'] = f'token {ACCESS_TOKEN}'
+        r = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
+        if r.status_code == 200:
+            repos = r.json()
+            if isinstance(repos, list):
+                return sum(repo.get('stargazers_count', 0) for repo in repos if isinstance(repo, dict) and 'stargazers_count' in repo)
+    except Exception as e:
+        print('REST stars fetch error:', e)
+    return 0
 
 def get_language_breakdown():
     query_count('language_breakdown')
@@ -343,8 +363,8 @@ def get_recent_activity():
 def get_medium_stats(username):
     # Medium RSS feed only returns up to 10 articles and doesn't expose claps.
     # Using user-provided values:
-    articles = "15"
-    claps = "14" # Update this value with your actual claps
+    articles = "18"
+    claps = "17" # Update this value with your actual claps
     return articles, claps
 
 def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, lang_data, recent_data, medium_data):
@@ -442,6 +462,8 @@ if __name__ == '__main__':
     total_loc, loc_time = perf_counter(loc_query, ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], 7)
     commit_data, commit_time = perf_counter(commit_counter, 7)
     star_data, star_time = perf_counter(graph_repos_stars, 'stars', ['OWNER'])
+    if not star_data or star_data == 0:
+        star_data, _ = perf_counter(get_stars_rest, USER_NAME)
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], None, 0, 0, False)
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
